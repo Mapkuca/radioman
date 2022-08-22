@@ -1,42 +1,55 @@
 package ru.netology.radio;
 
 public class Radio {
-    public int currentStationNumber;
-    public int minStationNumber = 0;
-    public int maxStationNumber = 9;
-    public int volume;
-    public int minVolume = 0;
-    public int maxVolume = 10;
+    private int currentStationNumber;
+    private int maxStationNumber;
+    private int volume;
 
-    public void setCurrentStationNumber(int newCurrentStationNumber) {
-        if (newCurrentStationNumber < minStationNumber) {
+    public Radio() {
+        maxStationNumber = 9;
+    }
+
+    public Radio(int stationAmount) {
+        maxStationNumber = stationAmount - 1;
+    }
+
+    public int getVolume() {
+        return volume;
+    }
+
+    public void setCurrentStationNumber(int currentStationNumber) {
+        if (currentStationNumber < 0) {
             return;
         }
-        if (newCurrentStationNumber > maxStationNumber) {
+        if (currentStationNumber > maxStationNumber) {
             return;
         }
-        currentStationNumber = newCurrentStationNumber;
+        this.currentStationNumber = currentStationNumber;
+    }
+
+    public int getCurrentStationNumber() {
+        return currentStationNumber;
     }
 
     public void nextStation() {
-        if (currentStationNumber >= maxStationNumber) {
-            setCurrentStationNumber(minStationNumber);
+        if (currentStationNumber < maxStationNumber) {
+            currentStationNumber++;
         } else {
-            setCurrentStationNumber(currentStationNumber + 1);
+            currentStationNumber = 0;
         }
     }
 
     public void prevStation() {
-        if (currentStationNumber <= minStationNumber) {
-            setCurrentStationNumber(maxStationNumber);
+        if (currentStationNumber > 0) {
+            currentStationNumber--;
         } else {
-            setCurrentStationNumber(currentStationNumber - 1);
+            currentStationNumber = maxStationNumber;
         }
     }
 
     public void increaseVolume() {
-       int target = volume + 1;
-       setVolume(target);
+        int target = volume + 1;
+        setVolume(target);
     }
 
     public void decreaseVolume() {
@@ -44,10 +57,10 @@ public class Radio {
     }
 
     public void setVolume(int volume) {
-        if (volume < minVolume) {
+        if (volume < 0) {
             return;
         }
-        if (volume > maxVolume) {
+        if (volume > 100) {
             return;
         }
         this.volume = volume;
